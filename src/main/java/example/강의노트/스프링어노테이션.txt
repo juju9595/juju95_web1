@@ -29,6 +29,11 @@
 8. @DeleteMapping   : HTTP(웹) 통신의 METHOD 중에 DELETE 방식으로 요청 매핑(연결) ,  주로 Delete
     - XXXXMapping("URL정의") : Mapping 어노테이션 (소괄호 안에서 정의할 웹주소(URL)을 baseURL(http://localhost:8080) 뒤로 사용할 주소 정의
     - GetMapping("/member") : "http://localhost:8080/member"
+9. @RequestMapping : HTTP (웹)통신의 주로 class 요청 매핑 , 즉] 공통 URL 정의
+    - @RequestMapping("/member")
+      class Controller{
+        @GetMapping("/find")    <-------"/member/fid"
+        }
 
 9. @ResponseBody    : HTTP(웹) 통신의 요청 처리 이후 응답 반환시, *자바 타입에서 주로 JSON 타입으로 자동 변환*
 10. @RequestParam    : 쿼리스트링, GET/DELETE, 단일 매개변수 , int/String/List/Map
