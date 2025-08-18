@@ -12,11 +12,13 @@
 <body>
 
     <jsp:include page="/header.jsp"></jsp:include>
+    <button type="button" onclick="dataAPI()">전체조회</button>
     <div id="container">
         <!-- KAKAO 지도가 출력되는 DIV -->
         <div id="map"></div>        
-        <div id="sidebar"></div>
-        
+        <div id="sidebar">
+        </div>
+
     </div>
     
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b34dee7a8e92b455b69ea54a454404b&libraries=clusterer"></script>
