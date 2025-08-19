@@ -138,6 +138,20 @@ public class MemberDao extends Dao{
 
     }
 
+    // 아이디찾기
+    public MemberDto findId(String mname, String mphone){
+        try{
+            String sql = "select *from member where mname=?, mphone=?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, mname);
+            ps.setString(2,mphone);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }return new MemberDto();
+    }
+    // 비밀번호 찾기
+
 
 
 
