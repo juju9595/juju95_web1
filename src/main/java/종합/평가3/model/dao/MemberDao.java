@@ -5,6 +5,7 @@ import 종합.평가3.model.dto.MemberDto;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,20 +13,26 @@ import java.util.List;
 public class MemberDao extends Dao{
 
     //[1] 회원 등록
-    public boolean memberWrite(MemberDto memberDto){
+    public int memberWrite(MemberDto memberDto){
         try{
             String sql = "INSERT INTO MEMBER_TBL_02 (custname, phone, address, grade, city) VALUES (?,?,?,?,?);";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1,memberDto.getCustname());
             ps.setString(2,memberDto.getPhone());
             ps.setString(3,memberDto.getAddress());
             ps.setString(4,memberDto.getGrade());
             ps.setString(5,memberDto.getCity());
             int count = ps.executeUpdate();
-            if (count >=1)return true;
+            if (count == 1){
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()){
+                    int custno = rs.getInt(1);
+                    return custno;
+                }
+            }
         }catch (Exception e){
             System.out.println(e);
-        }return false;
+        }return 0;
     }
 
     //[2] 회원 조회
@@ -57,7 +64,7 @@ public class MemberDao extends Dao{
         System.out.println("MemberDao.moneyPrint");
         List<MemberDto> list = new ArrayList<>();
         try{
-            String sql = "select custno, sum(amount*price) from MONEY_TBL_02 order by sum(amount*price) desc limit 4";
+            String sql = "select custno, sum(amount*price) from MONEY_TBL_02 order by sum(amount*price) desc";
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){

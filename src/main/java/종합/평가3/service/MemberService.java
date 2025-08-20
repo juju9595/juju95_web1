@@ -12,10 +12,10 @@ public class MemberService {
 
     //등록
     @Autowired private MemberDao memberDao;
-    public boolean memberWrite(MemberDto memberDto){
+    public int memberWrite(MemberDto memberDto){
         System.out.println("MemberService.memberWrite");
         System.out.println("memberDto = " + memberDto);
-        boolean result = memberDao.memberWrite(memberDto);
+        int result = memberDao.memberWrite(memberDto);
         return result;
     }
 
@@ -26,6 +26,8 @@ public class MemberService {
         return result;
     }
 
+    //회원매출 조회
+    public List<>
     //회원정보 수정
     public boolean memberUpdate(MemberDto memberDto){
         System.out.println("MemberService.memberUpdate");

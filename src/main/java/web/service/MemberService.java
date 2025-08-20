@@ -54,6 +54,10 @@ public class MemberService {
         return result;
     }
 
-
+    //[9] 아이디 찾기
+    public int find(MemberDto memberDto){
+        int result = memberDao.find(memberDto);
+        return result;
+    }
 
 }

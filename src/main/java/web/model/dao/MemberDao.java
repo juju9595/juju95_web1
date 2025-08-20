@@ -139,18 +139,23 @@ public class MemberDao extends Dao{
     }
 
     // 아이디찾기
-    public MemberDto findId(String mname, String mphone){
+    public int find(MemberDto memberDto){
         try{
-            String sql = "select *from member where mname=?, mphone=?";
+            String sql = "select *from member where mname=? and mphone=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, mname);
-            ps.setString(2,mphone);
-
+            ps.setString(1, memberDto.getMname());
+            ps.setString(2,memberDto.getMphone());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                int mno = rs.getInt("mno");
+                return mno; // 일치할 경우 조회한 회원번호 반환
+            }
         } catch (Exception e) {
             System.out.println(e);
-        }return new MemberDto();
+        }return 0;
     }
     // 비밀번호 찾기
+
 
 
 

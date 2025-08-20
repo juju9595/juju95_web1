@@ -14,9 +14,7 @@ const findId = async()=>{
         }
         const response = await fetch("/member/find", option);
         const data = await response.json();
-        if(data == true)
+        if(data > 0 )
         {findId.innerHTML = `${mid}`+"입니다"}else{alert('회원정보 없음')}
     }catch{}
 }
-
-//[2] 비밀번호 찾기
