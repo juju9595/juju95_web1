@@ -24,5 +24,7 @@
         연락처 :<input type="text" class="pwdPhone" id="pwdPhone" placeholder="연락처입력"/><br/>
         <button type="button" onclick="findPwd()">비밀번호찾기</button>
     </div>
+
+    <script src="/js/member/find.js"></script>
 </body>
 </html>

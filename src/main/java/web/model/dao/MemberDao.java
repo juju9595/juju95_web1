@@ -139,7 +139,7 @@ public class MemberDao extends Dao{
     }
 
     // 아이디찾기
-    public int find(MemberDto memberDto){
+    public MemberDto findId(MemberDto memberDto){
         try{
             String sql = "select *from member where mname=? and mphone=?";
             PreparedStatement ps = conn.prepareStatement(sql);
@@ -147,12 +147,12 @@ public class MemberDao extends Dao{
             ps.setString(2,memberDto.getMphone());
             ResultSet rs = ps.executeQuery();
             if(rs.next()){
-                int mno = rs.getInt("mno");
-                return mno; // 일치할 경우 조회한 회원번호 반환
+                memberDto.setMid(rs.getString("mid"));
+                return memberDto; // 일치할 경우 조회한 회원번호 반환
             }
         } catch (Exception e) {
             System.out.println(e);
-        }return 0;
+        }return null;
     }
     // 비밀번호 찾기
 
