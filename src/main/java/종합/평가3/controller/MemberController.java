@@ -28,6 +28,13 @@ public class MemberController {
         return result;
     }
 
+    //(3)회원개별 조회
+    @GetMapping("/info")
+    public MemberDto memberinfo(int custno){
+        MemberDto result =  memberService.memberinfo(custno);
+        return result;
+    }
+
     //(4) 회원 정보 수정 기능 구현
     @PutMapping("")
     public boolean memberUpdate(@RequestBody MemberDto memberDto){

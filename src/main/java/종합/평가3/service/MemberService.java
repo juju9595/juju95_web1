@@ -26,8 +26,11 @@ public class MemberService {
         return result;
     }
 
-    //회원매출 조회
-    public List<>
+    //회원개별 조회
+    public MemberDto memberinfo(int custno){
+        MemberDto result =  memberDao.memberinfo(custno);
+        return result;
+    }
     //회원정보 수정
     public boolean memberUpdate(MemberDto memberDto){
         System.out.println("MemberService.memberUpdate");

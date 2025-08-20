@@ -7,10 +7,7 @@ import lombok.*;
 @Getter@Setter@ToString
 public class MoneyDto {
     private int custno;
-    private int salenol;
-    private int pcost;
-    private int amount;
-    private int price;
-    private String pcode;
-    private String sdate;
+    private String custname;
+    private String grade;
+    private int totalPrice;
 }
