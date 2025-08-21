@@ -138,22 +138,50 @@ public class MemberDao extends Dao{
 
     }
 
-    // 아이디찾기
-    public MemberDto findId(MemberDto memberDto){
+    // 아이디/비밀번호 찾기
+    public String findId(Map<String,String > map){
         try{
-            String sql = "select *from member where mname=? and mphone=?";
+            String sql = "select mid from member where mname=? and mphone=?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, memberDto.getMname());
-            ps.setString(2,memberDto.getMphone());
+            ps.setString(1, map.get("mname"));
+            ps.setString(2, map.get("mphone"));
             ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                memberDto.setMid(rs.getString("mid"));
-                return memberDto; // 일치할 경우 조회한 회원번호 반환
-            }
-        } catch (Exception e) {
+            if(rs.next())return rs.getString("mid");
+        }catch (Exception e){
             System.out.println(e);
         }return null;
     }
+    public boolean findPwd(Map<String,String>map){
+        try{
+            String sql = "update member set mpwd = ? where mid = ? and mphone = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, map.get("mpwd"));
+            ps.setString(2, map.get("mid"));
+            ps.setString(3, map.get("mphone"));
+            int count = ps.executeUpdate();
+            return count == 1;
+        }catch (Exception e){
+            System.out.println(e);
+            return false;
+        }
+    }
+
+
+//    public MemberDto findId(MemberDto memberDto){
+//        try{
+//            String sql = "select *from member where mname=? and mphone=?";
+//            PreparedStatement ps = conn.prepareStatement(sql);
+//            ps.setString(1, memberDto.getMname());
+//            ps.setString(2,memberDto.getMphone());
+//            ResultSet rs = ps.executeQuery();
+//            if(rs.next()){
+//                memberDto.setMid(rs.getString("mid"));
+//                return memberDto; // 일치할 경우 조회한 회원번호 반환
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }return null;
+//    }
     // 비밀번호 찾기
 
 

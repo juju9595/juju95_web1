@@ -15,6 +15,8 @@
     <div id="container">
         <div id="map" style="width:100%;height:350px;"></div>
     </div>
+    <div id = "productDiv">
+    </div>
     
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9b34dee7a8e92b455b69ea54a454404b&libraries=clusterer"></script>
     <script src="/js/kakao/position.js"></script>

@@ -127,19 +127,15 @@ public class MemberController {
         return result;
     }
 
-    // 아이디 찾기 구현
-    //로그인 구현
-    @PostMapping("/find")
-    public int findId(@RequestBody MemberDto memberDto, HttpServletRequest request){
-        //1. 세션 정보 가져오기
-        HttpSession session = request.getSession();
-        //2. 로그인 성공한 회원번호 확인
-        int result = memberService.find(memberDto);
-        if(result > 0){
-            //3. 세션 정보에 속성 추가하기.
-            session.setAttribute("findId" , result);
-        }
-        //4. 반환
-        return result;
+
+    // 아이디 찾기
+    @GetMapping("/findid")
+    public Map<String,String> findId(@RequestParam Map<String,String >map){
+        return memberService.findId(map);
+
+    }
+    @GetMapping("/findpwd")
+    public Map<String,String> findPwd(@RequestParam Map<String,String > map) {
+        return memberService.findPwd(map);
     }
 }//class e
