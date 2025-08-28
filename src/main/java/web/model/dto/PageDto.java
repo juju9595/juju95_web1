@@ -2,6 +2,7 @@ package web.model.dto;
 
 import lombok.*;
 
+// 출력할 정보(게시물/회원/제품 등) 들고 페이징 정보를 갖는 클래스
 @NoArgsConstructor@AllArgsConstructor
 @Getter@Setter@ToString
 public class PageDto {

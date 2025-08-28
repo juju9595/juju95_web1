@@ -3,6 +3,7 @@ package web.model.dao;
 import org.springframework.stereotype.Repository;
 import web.model.dto.PostDto;
 
+import java.rmi.server.ExportException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -45,8 +46,8 @@ public class PostDao extends Dao {
     // [2-2] 카테고리별 전체 게시물 정보 조회
     public List<PostDto> findAll(int cno , int startRow , int count ){
         List<PostDto> list = new ArrayList<>();
-        try{ String sql = "SELECT * FROM post p INNER JOIN member m " +
-                " ON p.mno = m.mno WHERE p.cno = ?" +
+        try{ String sql = " SELECT * FROM post p INNER JOIN member m " +
+                " ON p.mno = m.mno WHERE p.cno = ? " +
                 " ORDER BY p.pno DESC LIMIT ? , ? ";
             PreparedStatement ps = conn.prepareStatement( sql );
             ps.setInt( 1 , cno );
@@ -94,8 +95,7 @@ public class PostDao extends Dao {
         try{
             String sql = " select * from post p inner join member m on p.mno = m.mno where cno = ? ";
             //*** 검색 ***
-            if(key.equals("ptitle")){
-                sql += " and ptitle like ? ";}
+            if(key.equals("ptitle")){sql += " and ptitle like ? ";}
             else if (key.equals("pcontent")) {sql += " and pcontent like ? ";}
             // 그외(정렬/페이징)
             sql += " order by pno desc limit ? , ? ";
@@ -119,5 +119,68 @@ public class PostDao extends Dao {
         }return list;
     }
 
+    //[3] 개별조회
+    public PostDto getPost(int pno){
+        PostDto postDto = new PostDto();
+        try{
+            String sql = "select * from post p inner join member m on p.mno = m.mno where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1,pno);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                postDto.setMno( rs.getInt("mno") );             postDto.setCno( rs.getInt("cno") );
+                postDto.setPcontent( rs.getString("pcontent")); postDto.setPdate( rs.getString("pdate") );
+                postDto.setPview( rs.getInt("pview") );         postDto.setPno( rs.getInt( "pno") );
+                postDto.setPtitle( rs.getString("ptitle"));
+                return postDto;
+            }
+        }catch (Exception e){
+            System.out.println(e);
+        }return null;
+    }
+
+    // [3-2] 게시물 조회수 1증가 * 업데이트
+    public void incrementView (int pno){
+        try{
+            String sql = "update post set pview = pview + 1 where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            ps.executeUpdate();
+            //void 라서 return이 없다.
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+
+    //[4] 개별 삭제
+    public boolean deletePost(int pno){
+        try{
+            String sql = "delete from post where pno = ?" ;
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, pno);
+            return ps.executeUpdate() == 1;
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return false;
+    }
+
+
+    //[5] 개별 수정
+    public int updatePost(PostDto postDto ){
+        try{
+            String sql = "update post set ptitle = ? , pcontent = ?, cno = ? where pno = ? ";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, postDto.getPtitle());
+            ps.setString(2, postDto.getPcontent());
+            ps.setInt(3,postDto.getCno());
+            ps.setInt(4,postDto.getPno());
+            int count = ps.executeUpdate();
+            if(count == 1){return postDto.getPno();}
+        }catch(Exception e){
+            System.out.println(e);
+        }return 0;
+    }
 
 }//class e

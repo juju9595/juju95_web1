@@ -59,8 +59,25 @@ public class PostService {
         return pageDto; // 반환
     }
 
+    //[3] 게시물 개별 조회
+    public PostDto getPost(int pno){
+        return postDao.getPost(pno);
+    }
 
+    //[3-2] 게시물 조회수 1증가 * 업데이트
+    public void incrementView(int pno){
+        postDao.incrementView(pno);
+    }
 
+    //[4] 게시물 삭제
+    public boolean deletePost(int pno){
+        return postDao.deletePost(pno);
+    }
+
+    //[5] 게시물 수정
+    public int updatePost(PostDto postDto ) {
+        return postDao.updatePost(postDto);
+    }
 
 
 

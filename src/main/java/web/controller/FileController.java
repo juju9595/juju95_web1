@@ -15,7 +15,7 @@ public class FileController {
     //[1] 업로드
     //
     //POST,
-    @PostMapping("/upload")
+    @PostMapping("/static/upload")
     public String fileUpload(MultipartFile multipartFile){
         System.out.println("multipartFile = " + multipartFile);
         System.out.println("FileController.fileUpload");
